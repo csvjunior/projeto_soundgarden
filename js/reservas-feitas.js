@@ -1,16 +1,18 @@
-const URL = "https://xp41-soundgarden-api.herokuapp.com/events";
+const URL = "https://xp41-soundgarden-api.herokuapp.com/bookings/event";
 const tableEvent = document.querySelector(".table");
+
+const urlParams = new URLSearchParams(window.location.search);
+const idParams = urlParams.get("id");
 
 
 async function getEvent() {
   try {
-    const response = await fetch((`${URL}`), {
-      method: 'GET', //DELETE
+    const response = await fetch((`${URL}/${idParams}`), {
+      method: 'GET',
       headers: {
         'Content-type': 'application/json'
       }
     });
-    //console.log(response);
 
     const data = await response.json();
     console.log(data);
@@ -22,10 +24,9 @@ async function getEvent() {
                     </table>`;
 
     tableEvent.innerHTML = clear;
-    
 
     data.forEach((event) => {
-        
+
       cont++;
 
       const card = `<table class="table">
@@ -33,14 +34,9 @@ async function getEvent() {
           <tbody>
               <tr>
                   <th scope="row">${cont}</th>
-                  <td>${event.scheduled}</td>
-                  <td>${event.name}</td>
-                  <td>${event.attractions}</td>
-                  <td>
-                      <a href="reservas-feitas.html?id=${event._id}" class="btn btn-dark">ver reservas</a>
-                      <a href="editar-evento.html?id=${event._id}" class="btn btn-secondary">editar</a>
-                      <a href="excluir-evento.html?id=${event._id}" class="btn btn-danger">excluir</a>
-                  </td>
+                  <td>${event.event.scheduled}</td>
+                  <td>${event.owner_name}</td>
+                  <td>${event.owner_email}</td>
               </tr>
                   
           </tbody>
