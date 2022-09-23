@@ -15,16 +15,24 @@ async function getEvent() {
     const data = await response.json();
     console.log(data);
 
-    
+    let cont = 0;
+
+    const clear = `<table class="table">
+
+                    </table>`;
+
+    tableEvent.innerHTML = clear;
     
 
     data.forEach((event) => {
+        
+      cont++;
 
       const card = `<table class="table">
 
           <tbody>
               <tr>
-                  <th scope="row">${event._id}</th>
+                  <th scope="row">${cont}</th>
                   <td>${event.scheduled}</td>
                   <td>${event.name}</td>
                   <td>${event.attractions}</td>
