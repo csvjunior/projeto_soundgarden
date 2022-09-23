@@ -56,18 +56,18 @@
             <main class="col-9  p-5">
                 <div class="my-5">
                     <h1>Editar evento</h1>
+
                 </div>
                 <div>
                     <!-- - cadastro de evento (nome, atrações, descrição, horário, data, numero de ingressos) -->
-                    <form class="col-6">
+                    <form id="formulario-cadastro-evento" class="col-6">
                         <div class="mb-3">
                             <label for="nome" class="form-label">Nome</label>
                             <input type="text" class="form-control" id="nome" aria-describedby="nome">
                         </div>
                         <div class="mb-3">
-                            <label for="banner" class="form-label">Banner</label>
-                            <input type="text" class="form-control" id="banner" aria-describedby="banner">
-                            <small>adicione o link da imagem</small>
+                            <label for="poster" class="form-label">Poster</label>
+                            <input type="text" class="form-control" id="poster" aria-describedby="poster">
                         </div>
                         <div class="mb-3">
                             <label for="atracoes" class="form-label">Atrações</label>
@@ -80,14 +80,13 @@
                         </div>
                         <div class="mb-3">
                             <label for="data" class="form-label">Data</label>
-                            <input type="datetime" name="data" id="data" class="form-control"
-                                placeholder="00/00/00 00:00">
+                            <input type="datetime-local" name="data" id="data" class="form-control">
                         </div>
                         <div class="mb-3">
                             <label for="lotacao" class="form-label">Lotação (número de ingressos disponiveis)</label>
                             <input type="number" class="form-control" id="lotacao" aria-describedby="lotacao">
                         </div>
-                        <button type="submit" class="btn btn-primary">enviar</button>
+                        <button id="botao-criar-evento" type="button" class="btn btn-primary">enviar</button>
                     </form>
                 </div>
             </main>
@@ -98,5 +97,4 @@
     </script>
     <script src="js/editar-evento.js"></script>
 </body>
-
 </html>

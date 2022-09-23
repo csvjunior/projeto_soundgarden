@@ -1,64 +1,38 @@
-const URL = "https://xp41-soundgarden-api.herokuapp.com/bookings/event";
-const mainReserve = document.querySelector(".bd-example");
+function criarTabela(reservas) {
+  let body = document.getElementById('table-reserva-body');
+  for (let i = 0; i < reservas.length; i++) {
+      let reserva = reservas[i];
+      let row = document.createElement('tr');
 
-const urlParams = new URLSearchParams(window.location.search);
-const idParams = urlParams.get("id");
-console.log(idParams);
+      let cellIndex = document.createElement('td');
+      cellIndex.textContent = `${i + 1}`;
+      row.appendChild(cellIndex);
 
+      let cellNome = document.createElement('td');
+      cellNome.textContent = reserva.event == null ? "-" : reserva.event['name']
+      row.appendChild(cellNome);
 
-async function getReserve() {
-  try {
-    const response = await fetch((`${URL}/${idParams}`), {
-      method: 'GET',
-      headers: {
-        'Content-type': 'application/json'
-      }
-    });
-    console.log(response);
+      let cellTitular = document.createElement('td');
+      cellTitular.textContent = reserva['owner_name'];
+      row.appendChild(cellTitular);
 
-    const data = await response.json();
-    console.log(data);
+      let cellEmail = document.createElement('td');
+      cellEmail.textContent = reserva['owner_email'];
+      row.appendChild(cellEmail);
 
+      let cellTickets = document.createElement('td');
+      cellTickets.textContent = reserva['number_tickets'];
+      row.appendChild(cellTickets);
 
-
-    data.forEach((event) => {
-      const card = `
-      <div class="bd-example">
-          <table class="table">
-              <thead>
-                  <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Data</th>
-                      <th scope="col">Titulo</th>
-                      <th scope="col">Atrações</th>
-                      <th scope="col">Ações</th>
-                  </tr>
-              </thead>
-
-              <tbody>
-              <tr>
-                  <th scope="row">${event._id}</th>
-                  <td>${event.scheduled}</td>
-                  <td>${event.name}</td>
-                  <td>${event.attractions}</td>
-                  <td>
-                      <a href="reservas.html?id=${event._id}" class="btn btn-dark">ver reservas</a>
-                      <a href="editar-evento.html?id=${event._id}" class="btn btn-secondary">editar</a>
-                      <a href="excluir-evento.html?id=${event._id}" class="btn btn-danger">excluir</a>
-                  </td>
-              </tr>
-                  
-          </tbody>
-          
-          </table>
-      </div>` 
-
-      mainReserve.innerHTML += card;
-    });
-
-  } catch (error) {
-    console.log(error);
+      body.appendChild(row);
   }
 }
-
-getReserve();
+fetch("https://xp41-soundgarden-api.herokuapp.com/bookings").then(function(response) {
+  return response.json();
+}).then(function(reservas) {
+  console.log(reservas);
+  criarTabela(reservas)
+}).catch(function(erro) {
+    console.log(erro)
+  alert("Falhou");
+});
