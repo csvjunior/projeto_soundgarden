@@ -20,7 +20,7 @@ async function TodosEventos() {
             <h2>${event.name}- ${event.scheduled}</h2>
             <h4>${event.attractions}</h4>
             <p>${event.description}</p>
-            <a href="#" class="btn btn-primary">reservar ingresso</a>
+            <a href="reservas.html" class="btn btn-primary">reservar ingresso</a>
             </article>
         `
 
