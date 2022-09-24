@@ -22,8 +22,10 @@ async function evento() {
     const data = await response.json();
     console.log(data);
 
+    const principal = data.slice(0, 3);
 
-      data.forEach((event) => {
+
+      principal.forEach((event) => {
         const card = `<article class="evento card p-5 m-3">
         <h2>${event.name}- ${event.scheduled}</h2>
         <h4>${event.attractions}</h4>
