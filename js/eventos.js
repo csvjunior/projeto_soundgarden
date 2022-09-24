@@ -1,35 +1,48 @@
-const URL = "https://xp41-soundgarden-api.herokuapp.com/events";
-const postEvent = document.querySelector("#post-event");
-
-//GET de todos os eventos
-async function TodosEventos() {
-  try {
-
-    const response = await fetch(URL, {
-        method: 'GET'
-    });
-    //console.log(response);
-
-    const data = await response.json();
-    //console.log(data);
-
-    data.forEach((event) => {
-
-        const card = `
-            <article class="evento card p-5 m-3">
-            <h2>${event.name}- ${event.scheduled}</h2>
-            <h4>${event.attractions}</h4>
-            <p>${event.description}</p>
-            <a href="reservas.html" class="btn btn-primary">reservar ingresso</a>
-            </article>
-        `
-
-      postEvent.innerHTML += card;
-    });
-
-  } catch (error) {
-    console.log(error);
+function criarTabela(eventos) {
+    let body = document.getElementById("card-eventos");
+    let quantidade = Number(body.getAttribute("quantidade")) || eventos.length;
+    for (let i = 0; i < quantidade; i++) {
+        let evento = eventos[i];
+        let article = document.createElement('article');
+        article.setAttribute("class", "evento card p-5 m-3");
+  
+        let cellTitulo = document.createElement('h2');
+        let date = new Date(evento.scheduled);
+        cellTitulo.textContent = evento['name']+ " - " + date.toLocaleString();
+        article.appendChild(cellTitulo);
+        
+        let cellAtracoes = document.createElement('h4');
+        cellAtracoes.textContent = evento['attractions'];
+        article.appendChild(cellAtracoes);
+  
+        let cellDescricao = document.createElement('p');
+        cellDescricao.textContent = evento['description'];
+        article.appendChild(cellDescricao);
+  
+  
+        let botaoReservarIngresso = document.createElement('a');
+        botaoReservarIngresso.textContent = 'Reservar Ingressos';
+        botaoReservarIngresso.setAttribute('class', 'btn btn-primary');
+        botaoReservarIngresso.setAttribute('href', 'reservas.html');
+        article.appendChild(botaoReservarIngresso);
+  
+        body.appendChild(article);
+    }
   }
-}
-
-TodosEventos();
+  
+  let confirmReserv = document.getElementsByClassName('btn btn-primary');
+  
+  confirmReserv.onclick = function(){
+    alert("Ingresso reservado com sucesso!")
+  }
+  
+  
+  fetch("https://xp41-soundgarden-api.herokuapp.com/bookings").then(function(response) {
+      return response.json();
+    }).then(function(eventos) {
+      console.log(eventos);
+      criarTabela(eventos)
+    }).catch(function(erro) {
+        console.log(erro);
+      alert("Falhou");
+    });
